@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {{ colaborador.id }} - {{ colaborador.nome }} -  {{ colaborador.cpf }} - {{ colaborador.matricula }}
+
+
+    <form method="POST" action="{% url 'update' colaborador.id %}">
+        {% csrf_token %}
+        <input type="text" name="nome" placeholder="Nome" value="{{ colaborador.nome }}">
+        <input type="text" name="cpf" placeholder="CPF" value="{{ colaborador.cpf }}">
+        <input type="text" name="matricula" placeholder="Matricula" value="{{ colaborador.matricula }}">
+        <button type="submit">Atualizar</button> 
+</body>
+</html>
