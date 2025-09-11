@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Lista de EPI's{% endblock %}
+
+{% block content %}
+  <div class="row g-3">
+    <!-- Ações principais -->
+    <div class="col-12 col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="h5 mb-2">Gestão de EPI's</h2>
+          <p class="text-muted">Escolha uma ação:</p>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="{% url 'app_epi:cadastrar_epi' %}" class="btn btn-primary">+ Novo EPI</a>
+            <a href="{% url 'app_epi:listar_epi' %}" class="btn btn-outline-secondary">Listar EPI's</a>
+            <a href="{% url 'app_epi:pagina_editar_epi' %}" class="btn btn-outline-secondary">Editar EPI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

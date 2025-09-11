@@ -16,10 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import views
+app_name = 'app_epi'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('app_menu.urls')),
-    path('usuarios/', include('app_usuarios.urls')),
-    path('epi/', include('app_epi.urls')),
+    path('', views.home, name='home'),
+    path('listar_epi/', views.listar_epi, name='listar_epi'),
+    path('cadastrar_epi/', views.cadastrar_epi, name='cadastrar_epi'),
+    path('editar_epi/<int:id>/', views.editar_epi, name='editar_epi'),
+    path('update/<int:id>/', views.update, name='update'),
+    path('pagina_editar_epi/', views.pagina_editar_epi, name='pagina_editar_epi'),
+    path('delete/<int:id>/', views.delete, name='delete'),
+    
 ]

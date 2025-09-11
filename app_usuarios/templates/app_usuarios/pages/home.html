@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Colaboradores{% endblock %}
+
+{% block content %}
+  <!-- Cabeçalho da seção -->
+  <section class="text-center my-4">
+    <span class="pill">Seção</span>
+    <h1 class="display-6 mt-2 mb-1">Colaboradores</h1>
+    <p class="text-muted">Cadastre, edite e gerencie os colaboradores do sistema.</p>
+  </section>
+
+  <!-- Cards de ação -->
+  <div class="row g-4 justify-content-center">
+    <!-- Card: Cadastrar -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card dash-card h-100 text-center p-4">
+        <div class="fs-1 mb-2" aria-hidden="true" style="color: var(--brand)"><i class="bi bi-people-fill"></i>
+        </div>
+        <h3 class="h5 mb-1">Cadastrar colaborador</h3>
+        <p class="text-muted mb-3">Inclua um novo colaborador no sistema.</p>
+        <a href="{% url 'app_usuarios:cadastrar_colaborador' %}" class="btn btn-brand px-4 mt-auto">
+          Acessar
+        </a>
+      </div>
+    </div>
+
+    <!-- Card: Listar -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card dash-card h-100 text-center p-4">
+        <div class="fs-1 mb-2" aria-hidden="true">📋</div>
+        <h3 class="h5 mb-1">Listar colaboradores</h3>
+        <p class="text-muted mb-3">Consulte e gerencie os registros existentes.</p>
+        <a href="{% url 'app_usuarios:index' %}" class="btn btn-brand px-4 mt-auto">
+          Acessar
+        </a>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

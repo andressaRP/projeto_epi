@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Cadastro de Colaboradores{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+  <h2 class="h5 mb-3">Cadastrar Novo Colaborador</h2>
+  
+  <form method="POST" action="{% url 'app_usuarios:cadastrar_colaborador' %}">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Digite o CPF" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="matricula" class="form-label">Matrícula</label>
+      <input type="text" id="matricula" name="matricula" class="form-control" placeholder="Digite a matrícula" required>
+    </div>
+    
+    <div class="text-end">
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </div>
+  </form>
+</div>
+{% endblock content %}

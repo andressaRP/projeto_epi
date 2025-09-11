@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Editar EPI{% endblock %}
+
+{% block content %}
+<div class="row g-3">
+  <!-- Resumo do registro -->
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 mb-1">Editar EPI</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulário -->
+  <div class="col-12">
+    <form method="POST" action="{% url 'app_epi:update' epi.id %}" class="card shadow-sm">
+      {% csrf_token %}
+      <div class="card-body">
+
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" id="nome" name="nome" class="form-control"
+                 placeholder="Digite o nome" value="{{ epi.nome }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="codigo_interno" class="form-label">Código Interno</label>
+          <input type="text" id="codigo_interno" name="codigo_interno" class="form-control"
+                 placeholder="Digite o código interno" value="{{ epi.codigo_interno }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="ca" class="form-label">CA</label>
+          <input type="text" id="ca" name="ca" class="form-control"
+                 placeholder="Digite o CA" value="{{ epi.ca }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="tamanho" class="form-label">Tamanho</label>
+          <input type="text" id="tamanho" name="tamanho" class="form-control"
+                 placeholder="Digite o tamanho" value="{{ epi.tamanho }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="vida_util_meses" class="form-label">Vida Útil (em meses)</label>
+          <input type="text" id="vida_util_meses" name="vida_util_meses" class="form-control"
+                 placeholder="Digite a vida útil" value="{{ epi.vida_util_meses }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="quantidade" class="form-label">Quantidade</label>
+          <input type="text" id="quantidade" name="quantidade" class="form-control"
+                 placeholder="Digite a quantidade" value="{{ epi.quantidade }}">
+        </div>
+
+      </div>
+
+      <div class="card-footer d-flex justify-content-end gap-2 bg-white">
+        <a href="{% url 'app_epi:listar_epi' %}" class="btn btn-outline-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

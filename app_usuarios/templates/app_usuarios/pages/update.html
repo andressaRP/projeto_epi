@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Editar Colaborador{% endblock %}
+
+{% block content %}
+<div class="row g-3">
+  <!-- Resumo do registro -->
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-body d-flex flex-wrap gap-3 align-items-center">
+        <div class="flex-grow-1">
+          <h2 class="h5 mb-1">Editar Colaborador</h2>
+          <div class="text-muted small">
+            ID: <b>{{ colaborador.id }}</b> ·
+            CPF: <b>{{ colaborador.cpf }}</b> ·
+            Matrícula: <b>{{ colaborador.matricula }}</b>
+          </div>
+        </div>
+        <a href="{% url 'app_usuarios:index' %}" class="btn btn-outline-secondary btn-sm">Voltar para a lista</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulário -->
+  <div class="col-12">
+    <form method="POST" action="{% url 'app_usuarios:update' colaborador.id %}" class="card shadow-sm">
+      {% csrf_token %}
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text"
+                   id="nome"
+                   name="nome"
+                   class="form-control"
+                   placeholder="Digite o nome"
+                   value="{{ colaborador.nome }}"
+                   required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text"
+                   id="cpf"
+                   name="cpf"
+                   class="form-control"
+                   placeholder="000.000.000-00"
+                   value="{{ colaborador.cpf }}"
+                   required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="matricula" class="form-label">Matrícula</label>
+            <input type="text"
+                   id="matricula"
+                   name="matricula"
+                   class="form-control"
+                   placeholder="Ex.: 12345"
+                   value="{{ colaborador.matricula }}"
+                   required>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer d-flex justify-content-end gap-2 bg-white">
+        <a href="{% url 'app_usuarios:index' %}" class="btn btn-outline-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
