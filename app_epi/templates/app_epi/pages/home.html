@@ -1,20 +1,55 @@
 {% extends 'base.html' %}
-{% block title %}Lista de EPI's{% endblock %}
+{% block title %}EPI's{% endblock %}
 
 {% block content %}
-  <div class="row g-3">
-    <!-- Ações principais -->
-    <div class="col-12 col-md-8">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h2 class="h5 mb-2">Gestão de EPI's</h2>
-          <p class="text-muted">Escolha uma ação:</p>
-          <div class="d-flex flex-wrap gap-2">
-            <a href="{% url 'app_epi:cadastrar_epi' %}" class="btn btn-primary">+ Novo EPI</a>
-            <a href="{% url 'app_epi:listar_epi' %}" class="btn btn-outline-secondary">Listar EPI's</a>
-            <a href="{% url 'app_epi:pagina_editar_epi' %}" class="btn btn-outline-secondary">Editar EPI</a>
-          </div>
+  <!-- Cabeçalho da seção -->
+  <section class="text-center my-4">
+    <span class="pill">Seção</span>
+    <h1 class="display-6 mt-2 mb-1">EPI's</h1>
+    <p class="text-muted">Cadastre, liste e gerencie os Equipamentos de Proteção Individual.</p>
+  </section>
+
+  <!-- Cards de ação -->
+  <div class="row g-4 justify-content-center">
+    <!-- Card: Cadastrar EPI -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card dash-card h-100 text-center p-4">
+        <div class="fs-1 mb-2" aria-hidden="true" style="color: var(--brand)">
+          <i class="bi bi-shield-check"></i>
+        </div>  
+        <h3 class="h5 mb-1">Cadastrar EPI</h3>
+        <p class="text-muted mb-3">Inclua um novo EPI no sistema.</p>
+        <a href="{% url 'app_epi:cadastrar_epi' %}" class="btn btn-brand px-4 mt-auto">
+          Acessar
+        </a>
+      </div>
+    </div>
+
+    <!-- Card: Listar EPI's -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card dash-card h-100 text-center p-4">
+        <div class="fs-1 mb-2" aria-hidden="true">
+          <i class="bi bi-list-check"></i>
         </div>
+        <h3 class="h5 mb-1">Listar EPI's</h3>
+        <p class="text-muted mb-3">Consulte e gerencie os EPI's cadastrados.</p>
+        <a href="{% url 'app_epi:listar_epi' %}" class="btn btn-brand px-4 mt-auto">
+          Acessar
+        </a>
+      </div>
+    </div>
+
+    <!-- Card: Editar EPI -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card dash-card h-100 text-center p-4">
+        <div class="fs-1 mb-2" aria-hidden="true">
+         <i class="bi bi-pencil-square"></i>
+        </div>
+        <h3 class="h5 mb-1">Editar EPI</h3>
+        <p class="text-muted mb-3">Acesse a página de edição de EPI.</p>
+        <a href="{% url 'app_epi:pagina_editar_epi' %}" class="btn btn-brand px-4 mt-auto">
+          Acessar
+        </a>
       </div>
     </div>
   </div>

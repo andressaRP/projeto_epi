@@ -48,7 +48,7 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
             <!-- Form que envia POST com CSRF -->
-            <form method="post" action="{% url 'app_epi:delete' epi.id %}">
+            <form method="POST" action="{% url 'app_epi:delete' epi.id %}">
               {% csrf_token %}
               <button type="submit" class="btn btn-danger">Excluir</button>
             </form>
