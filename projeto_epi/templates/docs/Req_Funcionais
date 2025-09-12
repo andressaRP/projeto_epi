@@ -1,0 +1,9 @@
+Requisitos Funcionais
+RF01: Cadastrar EPI
+RF02: Cadastrar Colaborador
+RF03: Cadastrar Usuário
+RF04: Registrar Empréstimo
+RF05: Registrar Devolução
+RF06: Alertas (prazo/estoque)
+RF07: Relatórios (PDF/CSV)
+RF08: Auditoria de ações principais

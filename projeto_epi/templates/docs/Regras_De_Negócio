@@ -1,0 +1,7 @@
+Regras de Negócio
+RN01: Só empresta se houver estoque disponível.
+RN02: Todo empréstimo tem prazo de devolução.
+RN03: CA obrigatório quando o EPI exigir; alertar se perto do vencimento.
+RN04: Devolução pode ser parcial.
+RN05: Perfis: ADMIN, ATENDENTE, AUDITOR.
+
