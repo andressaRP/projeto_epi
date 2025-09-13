@@ -4,7 +4,7 @@ from django.db import models
 class Colaborador(models.Model):
     nome = models.CharField(max_length=100)
     cpf = models.CharField(max_length=14)
-    matricula = models.CharField(max_length=20)
+    matricula = models.CharField(max_length=20, unique=True, default="0000")
     ativo = models.BooleanField(default=True)
 
 def __str__(self):

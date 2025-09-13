@@ -71,15 +71,11 @@ def update(request, id):
 
     return render(request, "app_epi/pages/update.html", {'epi': epi})
 
-def pagina_editar_epi(request):
-    epis = Epi.objects.all()
-    return render(request, 'app_epi/pages/pagina_editar_epi.html', {'epis': epis})
-
 def delete(request, id):
     epi = get_object_or_404(Epi, pk=id)
     if request.method == "POST":
      epi.delete()
      messages.success(request, f"Epi {epi.nome} excluído com sucesso!")
-     return redirect("app_epi:pagina_editar_epi")
+     return redirect("app_epi:listar_epi")
     else:
-     return render(request, "app_epi/pages/pagina_editar_epi.html", {"epi": epi})
+     return render(request, "app_epi/pages/listar_epi.html", {"epi": epi})

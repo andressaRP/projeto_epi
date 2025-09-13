@@ -26,11 +26,11 @@ def cadastrar_colaborador(request):
             try:
                 Colaborador.objects.create(nome=nome, cpf=cpf, matricula=matricula)
                 messages.success(request, "Colaborador cadastrado com sucesso!")
-                return redirect('app_usuarios:index')  
+                return redirect('app_usuarios:cadastrar_colaborador')  
             except Exception as e:
                 messages.error(request, f"Erro ao salvar colaborador: {e}")
 
-    return render(request, 'app_usuarios/pages/cadastrar.html', {'colaboradores': Colaborador.objects.all()})
+    return render(request, "app_usuarios/pages/cadastrar.html")
 
 def editar_colaborador(request, id):
     colaborador = Colaborador.objects.get(id=id)

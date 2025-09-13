@@ -25,7 +25,6 @@ urlpatterns = [
     path('cadastrar_epi/', views.cadastrar_epi, name='cadastrar_epi'),
     path('editar_epi/<int:id>/', views.editar_epi, name='editar_epi'),
     path('update/<int:id>/', views.update, name='update'),
-    path('pagina_editar_epi/', views.pagina_editar_epi, name='pagina_editar_epi'),
     path('delete/<int:id>/', views.delete, name='delete'),
     
 ]

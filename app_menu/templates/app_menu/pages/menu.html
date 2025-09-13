@@ -2,49 +2,52 @@
 {% block title %}Início — Sistema EPI{% endblock %}
 
 {% block content %}
-  <!-- Cabeçalho da seção -->
-  <section class="text-center my-4">
-    <span class="pill">Seção</span>
-    <h1 class="display-6 mt-2 mb-1">Sistema de EPI</h1>
-    <p class="text-muted">Gerencie colaboradores, EPIs e empréstimos com rapidez e clareza.</p>
-  </section>
+<section class="text-center my-5">
+  <h1 class="fw-bold mt-3">Sistema de EPI</h1>
+  <p class="text-muted mb-4">Gerencie colaboradores, EPIs e empréstimos com rapidez e clareza.</p>
+</section>
 
-  <!-- Cards -->
-  <div class="row g-4">
-    <!-- Colaboradores -->
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="card dash-card h-100 text-center p-4">
-        <div class="mb-2 fs-1" style="color:var(--brand)">
+<div class="row g-4">
+  <!-- Colaboradores -->
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card dash-card h-100">
+      <div class="card-body d-flex flex-column align-items-center text-center p-4">
+        <div class="mb-2" style="font-size:2rem; color:var(--brand)">
           <i class="bi bi-people-fill"></i>
         </div>
         <h5 class="fw-semibold mb-1">Colaboradores</h5>
         <p class="text-muted mb-3">Cadastre, edite e gerencie colaboradores.</p>
-        <a href="{% url 'app_usuarios:home' %}" class="btn btn-brand px-4">Acessar</a>
-      </div>
-    </div>
-
-    <!-- EPIs -->
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="card dash-card h-100 text-center p-4">
-        <div class="mb-2 fs-1" style="color:var(--brand)">
-          <i class="bi bi-shield-check"></i>
-        </div>
-        <h5 class="fw-semibold mb-1">EPIs</h5>
-        <p class="text-muted mb-3">Cadastre e acompanhe os equipamentos.</p>
-        <a href="{% url 'app_epi:home' %}" class="btn btn-brand px-4">Acessar</a>
-      </div>
-    </div>
-
-    <!-- Empréstimos -->
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="card dash-card h-100 text-center p-4">
-        <div class="mb-2 fs-1" style="color:var(--brand)">
-          <i class="bi bi-box-seam"></i>
-        </div>
-        <h5 class="fw-semibold mb-1">Empréstimos</h5>
-        <p class="text-muted mb-3">Registre e controle a entrega de EPIs.</p>
-        <a class="btn btn-brand px-4 disabled">Em breve</a>
+        <a href="{% url 'app_usuarios:home' %}" class="btn btn-brand px-4 mt-auto">Acessar</a>
       </div>
     </div>
   </div>
+
+  <!-- EPIs -->
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card dash-card h-100">
+      <div class="card-body d-flex flex-column align-items-center text-center p-4">
+        <div class="mb-2" style="font-size:2rem; color:var(--brand)">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <h5 class="fw-semibold mb-1">EPIs</h5>
+        <p class="text-muted mb-3">Cadastre e acompanhe os equipamentos de proteção.</p>
+        <a href="{% url 'app_epi:home' %}" class="btn btn-brand px-4 mt-auto">Acessar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empréstimos -->
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card dash-card h-100">
+      <div class="card-body d-flex flex-column align-items-center text-center p-4">
+        <div class="mb-2" style="font-size:2rem; color:var(--brand)">
+          <i class="bi bi-box-seam"></i>
+        </div>
+        <h5 class="fw-semibold mb-1">Controle de EPI</h5>
+        <p class="text-muted mb-3">Registre e controle a entrega e devolução dos EPIs.</p>
+        <a href="{% url 'app_emprestimos:listar' %}" class="btn btn-brand px-4 mt-auto">Acessar</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

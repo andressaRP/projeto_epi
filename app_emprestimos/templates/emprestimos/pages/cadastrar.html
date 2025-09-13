@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}{% if modo == 'editar' %}Editar{% else %}Cadastrar{% endif %} Empréstimo{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+  <h2 class="h5 mb-3">{% if modo == 'editar' %}Editar{% else %}Cadastrar{% endif %} Empréstimo</h2>
+
+  <form method="POST"
+        action="{% if modo == 'editar' %}{% url 'app_emprestimos:editar' obj.id %}{% else %}{% url 'app_emprestimos:cadastrar' %}{% endif %}">
+    {% csrf_token %}
+
+    <!-- Colaborador -->
+    <div class="mb-3">
+      <label for="colaborador" class="form-label">Colaborador</label>
+      <select id="colaborador" name="colaborador" class="form-select" required>
+        <option value="">Selecione...</option>
+        {% for c in colaboradores %}
+          <option value="{{ c.id }}"
+            {% if modo == 'editar' and obj.colaborador_id == c.id %}selected{% endif %}>
+            {{ c.nome }} — {{ c.matricula }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- EPI -->
+    <div class="mb-3">
+      <label for="epi" class="form-label">EPI</label>
+      <select id="epi" name="epi" class="form-select" required>
+        <option value="">Selecione...</option>
+        {% for e in epis %}
+          <option value="{{ e.id }}"
+            {% if modo == 'editar' and obj.epi_id == e.id %}selected{% endif %}>
+            {{ e.nome }} — {{ e.codigo_interno }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Datas -->
+    <div class="mb-3">
+      <label for="data_emprestimo" class="form-label">Data de entrega</label>
+      <input type="datetime-local" id="data_emprestimo" name="data_emprestimo" class="form-control"
+             value="{% if modo == 'editar' and obj.data_emprestimo %}{{ obj.data_emprestimo|date:'Y-m-d\\TH:i' }}{% endif %}">
+    </div>
+
+    <div class="mb-3">
+      <label for="data_prevista_devolucao" class="form-label">Data prevista de devolução</label>
+      <input type="datetime-local" id="data_prevista_devolucao" name="data_prevista_devolucao" class="form-control"
+             value="{% if modo == 'editar' and obj.data_prevista_devolucao %}{{ obj.data_prevista_devolucao|date:'Y-m-d\\TH:i' }}{% endif %}">
+      <div class="form-text">Para “Emprestado/Em uso”, precisa ser futura.</div>
+    </div>
+
+    <!-- Status -->
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select id="status" name="status" class="form-select" required>
+        {% if modo == 'editar' %}
+          {% for value,label in status_choices %}
+            <option value="{{ value }}" {% if obj.status == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        {% else %}
+          <option value="emprestado">Emprestado</option>
+          <option value="em_uso">Em Uso</option>
+          <option value="fornecido">Fornecido</option>
+        {% endif %}
+      </select>
+    </div>
+
+    <!-- Campos mostrados só em status finais -->
+    <div id="box-devolucao" class="mb-3" style="display:none;"
+         data-finais='["devolvido","danificado","perdido"]'>
+      <div class="mb-3">
+        <label for="data_devolucao" class="form-label">Data da devolução</label>
+        <input type="datetime-local" id="data_devolucao" name="data_devolucao" class="form-control"
+               value="{% if modo == 'editar' and obj.data_devolucao %}{{ obj.data_devolucao|date:'Y-m-d\\TH:i' }}{% endif %}">
+      </div>
+      <div class="mb-3">
+        <label for="observacao_devolucao" class="form-label">Observação na devolução/perda</label>
+        <textarea id="observacao_devolucao" name="observacao_devolucao" rows="3" class="form-control"
+                  placeholder="Detalhes da devolução, dano ou perda...">{% if modo == 'editar' and obj.observacao_devolucao %}{{ obj.observacao_devolucao }}{% endif %}</textarea>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <a class="btn btn-outline-secondary" href="{% url 'app_emprestimos:listar' %}">Cancelar</a>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+  </form>
+</div>
+
+<script>
+(function(){
+  const statusEl = document.getElementById('status');
+  const box = document.getElementById('box-devolucao');
+  if (!statusEl || !box) return;
+  const finais = JSON.parse(box.dataset.finais); // ['devolvido','danificado','perdido']
+  function toggle(){ box.style.display = finais.includes(statusEl.value) ? 'block' : 'none'; }
+  toggle(); // já abre correto no editar
+  statusEl.addEventListener('change', toggle);
+})();
+</script>
+{% endblock content %}
