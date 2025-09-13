@@ -90,15 +90,25 @@ def cadastrar(request):
     })
 
 # --- EDITAR (libera todos os status) ---
+def _to_int_or_none(v):
+    try:
+        return int(v) if v not in (None, "") else None
+    except (TypeError, ValueError):
+        return None
+
 def editar(request, pk):
     obj = get_object_or_404(Emprestimo, pk=pk)
 
     if request.method == "POST":
         has_error = False
 
-        colaborador_id = request.POST.get("colaborador") or obj.colaborador_id
-        epi_id         = request.POST.get("epi") or obj.epi_id
-        status         = request.POST.get("status") or obj.status
+        # IDs vindos do POST (strings) -> converte para int
+        post_colab = request.POST.get("colaborador")
+        post_epi   = request.POST.get("epi")
+        colaborador_id = _to_int_or_none(post_colab) or obj.colaborador_id
+        epi_id         = _to_int_or_none(post_epi)   or obj.epi_id
+
+        status = request.POST.get("status") or obj.status
 
         d_emp  = _parse_dt(request.POST.get("data_emprestimo"))
         d_prev = _parse_dt(request.POST.get("data_prevista_devolucao"))
@@ -121,7 +131,7 @@ def editar(request, pk):
             has_error = True
 
         if has_error:
-            # >>> PRÉ-PREENCHER O OBJETO COM O QUE O USUÁRIO DIGITOU (NÃO SALVAR)
+            # pré-preenche o obj (sem salvar) para o template manter os valores
             obj.colaborador_id = colaborador_id
             obj.epi_id         = epi_id
             obj.status         = status
@@ -135,14 +145,14 @@ def editar(request, pk):
             epis = Epi.objects.order_by("nome")
             return render(request, "emprestimos/pages/cadastrar.html", {
                 "modo": "editar",
-                "obj": obj, 
+                "obj": obj,
                 "colaboradores": colaboradores,
                 "epis": epis,
                 "status_choices": [(s.value, s.label) for s in Emprestimo.Status],
                 "is_final": status in {"devolvido","danificado","perdido"},
             })
 
-        # sem erros -> salvar
+        # sem erros -> aplicar e salvar
         obj.colaborador_id = colaborador_id
         obj.epi_id         = epi_id
         obj.status         = status

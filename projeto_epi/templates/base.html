@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="light">
 <head>
@@ -9,67 +11,81 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    :root{
-      --brand:#41aec7; --brand-2:#43accc;
-      --bg:#f4f6f9; --ink:#1f2937; --muted:#6b7280; --card:#fff; --ring:rgba(37,99,235,.25);
-      --sidebar-w: 240px;
-    }
+  :root{
+    --brand:#41aec7; --brand-2:#43accc;
+    --bg:#f4f6f9; --ink:#1f2937; --muted:#6b7280; --card:#fff; --ring:rgba(37,99,235,.25);
+    --sidebar-w: 240px;
+  }
 
-    html,body{height:100%}
-    body{background:var(--bg); color:var(--ink);}
+  html,body{height:100%}
+  body{background:var(--bg); color:var(--ink);}
 
-    /* Header/topbar */
-    .topbar{
-      background:var(--brand);
-      color:#fff;
-      padding:.6rem 1rem;
-      display:flex; align-items:center; justify-content:space-between;
-      box-shadow:0 2px 8px rgba(16,24,40,.08);
-    }
-    .topbar .brand{font-weight:700;}
+  /* Header/topbar */
+  .topbar{
+    background:var(--brand);
+    color:#fff;
+    padding:.6rem 1rem;
+    display:flex; align-items:center; justify-content:space-between;
+    box-shadow:0 2px 8px rgba(16,24,40,.08);
+  }
+  .topbar .brand{font-weight:700;}
 
-    /* Layout */
-    .app-wrap{display:flex; min-height:calc(100vh - 0px);}
-    .sidebar{
-      width:var(--sidebar-w);
-      background:#f8fafc;
-      border-right:1px solid #e5e7eb;
-      display:flex; flex-direction:column;
-      position:sticky; top:0; height:calc(100vh - 0px);
-    }
-    .sidebar .section-title{
-      font-size:.8rem; font-weight:700; color:#64748b; letter-spacing:.04em;
-      padding:12px 16px; text-transform:uppercase;
-    }
-    .sidebar .nav-link{
-      display:block; padding:8px 16px; color:#0f172a; border-radius:8px; margin:2px 8px;
-    }
-    .sidebar .nav-link:hover{ background:#e7f6fb; }
-    .sidebar .nav-link.active{ background:#d9f0f7; font-weight:600; }
+  /* tira sublinhado do botão de usuário (btn-link) */
+  .topbar .topbar-user-btn{ text-decoration:none !important; }
+  .topbar .topbar-user-btn:hover{ text-decoration:none !important; opacity:.9; }
 
-    .sidebar .logout{ margin:12px; }
+  /* Layout */
+  .app-wrap{display:flex; min-height:calc(100vh - 0px);}
+  .sidebar{
+    width:var(--sidebar-w);
+    background:#f8fafc;
+    border-right:1px solid #e5e7eb;
+    display:flex; flex-direction:column;
+    position:sticky; top:0; height:calc(100vh - 0px);
+  }
+  .sidebar .section-title{
+    font-size:.8rem; font-weight:700; color:#64748b; letter-spacing:.04em;
+    padding:12px 16px; text-transform:uppercase;
+  }
+  .sidebar .nav-link{
+    display:block; padding:8px 16px; color:#0f172a; border-radius:8px; margin:2px 8px;
+  }
+  .sidebar .nav-link:hover{ background:#e7f6fb; }
+  .sidebar .nav-link.active{ background:#d9f0f7; font-weight:600; }
 
-    .content{ flex:1; padding:24px; min-width:0; }
+  .sidebar .logout{ margin:12px; }
 
-    /* Utilitários */
-    .dash-card{border:0;border-radius:18px;background:var(--card);box-shadow:0 6px 22px rgba(16,24,40,.06);transition:.15s}
-    .dash-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(16,24,40,.10)}
-    .pill{display:inline-block;padding:6px 10px;font-size:.75rem;border-radius:999px;background:var(--ring);color:var(--ink)}
-    .btn-brand{background:var(--brand);border:none}
-    .btn-brand:hover{background:var(--brand-2)}
-    footer{background:var(--brand-2);color:#fff}
+  .content{ flex:1; padding:24px; min-width:0; }
 
-    /* Opcional: cabeçalho azul claro nas tabelas */
-    .thead-azul { background-color:#1abee2 !important; color:#fff !important; }
+  /* Utilitários */
+  .dash-card{border:0;border-radius:18px;background:var(--card);box-shadow:0 6px 22px rgba(16,24,40,.06);transition:.15s}
+  .dash-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(16,24,40,.10)}
+  .pill{display:inline-block;padding:6px 10px;font-size:.75rem;border-radius:999px;background:var(--ring);color:var(--ink)}
+  .btn-brand{background:var(--brand);border:none}
+  .btn-brand:hover{background:var(--brand-2)}
+  footer{background:var(--brand-2);color:#fff}
 
-    /* Avatar do menu do usuário */
-    .user-menu .avatar-circle{
-      width: 28px; height: 28px; border-radius: 999px;
-      background: rgba(255,255,255,.2);
-      display:inline-flex; align-items:center; justify-content:center;
-    }
-    .user-menu .dropdown-menu{ min-width: 240px; }
-  </style>
+  /* Opcional: cabeçalho azul claro nas tabelas */
+  .thead-azul { background-color:#1abee2 !important; color:#fff !important; }
+
+  /* Avatar do menu do usuário */
+  .user-menu .avatar-circle{
+    width: 28px;           /* mude para 32px se quiser maior */
+    height: 28px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.2);
+    display:inline-flex; align-items:center; justify-content:center;
+    overflow: hidden;      /* garante o corte redondo */
+  }
+  .user-menu .avatar-circle img{
+    width:100%; height:100%;
+    object-fit: cover;     /* preenche sem distorcer */
+    display:block;         /* remove “espaço” de img inline */
+  }
+
+  .user-menu .dropdown-menu{ min-width: 240px; }
+</style>
+
 </head>
 <body>
 
@@ -81,13 +97,11 @@
 
     <!-- Dropdown do usuário: atalhos de cadastro -->
     <div class="dropdown user-menu">
-      <button class="btn btn-link text-white d-flex align-items-center gap-2"
-              type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="fw-semibold">
-          {{ request.user.get_full_name|default:"Usuário" }}
-        </span>
-        <span class="avatar-circle"><i class="bi bi-person"></i></span>
-        <i class="bi bi-caret-down-fill small"></i>
+      <button class="btn btn-link topbar-user-btn text-white d-flex align-items-center gap-2"
+        type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+       <span class="fw-semibold">Usuário</span>
+       <span class="avatar-circle"><img src="{% static 'img/avatar.png' %}" alt="avatar"></span>
+       <i class="bi bi-caret-down-fill small"></i>
       </button>
 
       <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuButton">
