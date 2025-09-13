@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'projeto_epi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'epi_db',     # nome do banco
-        'USER': 'root',       # usuário root do MySQL
-        'PASSWORD': '5636',
+        'NAME': 'epi_db',     
+        'USER': 'root',      
+        'PASSWORD': '123456',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
