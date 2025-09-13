@@ -1,0 +1,6 @@
+Requisitos Não Funcionais
+RNF01: Usabilidade simples e responsiva
+RNF02: Segurança (login, perfis, CSRF/SQLi)
+RNF03: Desempenho (listas até 100k reg. em 2s)
+RNF04: Backup diário
+RNF05: Conformidade básica com LGPD/NR-06
