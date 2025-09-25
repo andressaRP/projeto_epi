@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="card p-4">
+    <h5>Excluir EPI</h5>
+    <p>Tem certeza que deseja excluir <strong>{{ epi.nome }}</strong>?</p>
+    <form method="post" class="d-flex gap-2">
+      {% csrf_token %}
+      <a href="{% url 'app_epi:listar_epi' %}" class="btn btn-outline-secondary">Cancelar</a>
+      <button type="submit" class="btn btn-danger">Excluir</button>
+    </form>
+  </div>
+{% endblock %}

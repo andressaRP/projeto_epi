@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.db.models import ProtectedError
 from .models import Epi
 
 # Create your views here.
@@ -73,9 +74,14 @@ def update(request, id):
 
 def delete(request, id):
     epi = get_object_or_404(Epi, pk=id)
+
     if request.method == "POST":
-     epi.delete()
-     messages.success(request, f"Epi {epi.nome} excluído com sucesso!")
-     return redirect("app_epi:listar_epi")
-    else:
-     return render(request, "app_epi/pages/listar_epi.html", {"epi": epi})
+        try:
+            epi.delete()
+            messages.success(request, f"EPI {epi.nome} excluído com sucesso!")
+        except ProtectedError:
+            messages.error(request, "Não é possível excluir: existem empréstimos vinculados.")
+        return redirect("app_epi:listar_epi")
+
+    # GET → mostra tela de confirmação
+    return render(request, "app_epi/pages/confirmar_delete.html", {"epi": epi})

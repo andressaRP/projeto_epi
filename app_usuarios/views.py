@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.db.models.deletion import ProtectedError
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
+
 from .models import Colaborador
 
 # Create your views here.
@@ -64,9 +68,46 @@ def update(request, id):
 
 def delete(request, id):
     colaborador = get_object_or_404(Colaborador, pk=id)
+
     if request.method == "POST":
-     colaborador.delete()
-     messages.success(request, f"Colaborador {colaborador.nome} excluído com sucesso!")
-     return redirect("app_usuarios:index")
+        try:
+            colaborador.delete()
+            messages.success(request, f"Colaborador {colaborador.nome} excluído com sucesso!")
+        except ProtectedError:
+            qtd = colaborador.emprestimos.count()
+            messages.error(
+                request,
+                f"Não é possível excluir {colaborador.nome}: há {qtd} empréstimo(s) vinculado(s)."
+            )
+        return redirect("app_usuarios:index")
+
+    # GET -> exibe tela de confirmação com uma amostra dos vínculos (até 5)
+    exemplos = colaborador.emprestimos.select_related("epi")[:5]
+    return render(request, "app_usuarios/pages/confirmar_delete.html", {"colaborador": colaborador, "exemplos": exemplos}
+    )
+    
+
+
+def registrar(request):
+    # se já estiver logado, manda pro menu
+    if request.user.is_authenticated:
+     return redirect('app_menu:menu')
+
+    if request.method == "POST":
+     form = UserCreationForm(request.POST)
+     if form.is_valid():
+        user = form.save()
+        # autologin
+        username = form.cleaned_data['username']
+        raw_password = form.cleaned_data['password1']
+        user = authenticate(request, username=username, password=raw_password)
+        if user:
+          login(request, user)
+          messages.success(request, "Conta criada! Bem-vinda(o) ")
+          return redirect('login')
+        else:
+            messages.error(request, "Verifique os campos destacados.")
     else:
-     return render(request, "app_usuarios/pages/confirmar_delete.html", {"colaborador": colaborador})
+        form = UserCreationForm()
+
+    return render(request, 'registration/registrar.html', {'form': form})

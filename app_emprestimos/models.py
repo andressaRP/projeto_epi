@@ -6,7 +6,6 @@ from app_epi.models import Epi
 class Emprestimo(models.Model):
     class Status(models.TextChoices):
         EMPRESTADO = "emprestado", "Emprestado"
-        EM_USO     = "em_uso", "Em Uso"
         FORNECIDO  = "fornecido", "Fornecido"   # entrega definitiva
         DEVOLVIDO  = "devolvido", "Devolvido"
         DANIFICADO = "danificado", "Danificado"
@@ -17,6 +16,7 @@ class Emprestimo(models.Model):
 
     data_emprestimo          = models.DateTimeField(default=timezone.now)
     data_prevista_devolucao  = models.DateTimeField(null=True, blank=True)
+    condicao_emprestimo = models.TextField(null=True, blank=True)
 
     # usados quando status final
     data_devolucao           = models.DateTimeField(null=True, blank=True)

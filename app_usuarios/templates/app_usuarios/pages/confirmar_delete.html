@@ -9,7 +9,19 @@
     <strong>{{ colaborador.nome }}</strong> 
     (Matrícula: {{ colaborador.matricula }})?
   </p>
-  
+
+  {% if exemplos %}
+    <div class="alert alert-warning">
+      <strong>Atenção:</strong> Este colaborador possui empréstimos vinculados.
+      <ul class="mb-0 mt-2">
+        {% for emp in exemplos %}
+          <li>{{ emp.epi.nome }} — {{ emp.get_status_display }}</li>
+        {% endfor %}
+      </ul>
+      <small class="text-muted">Enquanto houver empréstimos, a exclusão será bloqueada.</small>
+    </div>
+  {% endif %}
+
   <form method="POST">
     {% csrf_token %}
     <a href="{% url 'app_usuarios:index' %}" class="btn btn-outline-secondary">Cancelar</a>

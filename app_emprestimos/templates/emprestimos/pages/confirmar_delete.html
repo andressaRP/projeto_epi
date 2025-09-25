@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Excluir Empréstimo{% endblock %}
+{% block content %}
+<div class="card shadow-sm p-4">
+  <h2 class="h5 mb-3">Excluir empréstimo</h2>
+  <p>
+    Confirmar exclusão do empréstimo:
+    <strong>{{ emp.epi.nome }}</strong> →
+    <strong>{{ emp.colaborador.nome }}</strong>
+    (status: {{ emp.get_status_display }})
+  </p>
+
+  <form method="post" class="d-flex gap-2">
+    {% csrf_token %}
+    <a href="{% url 'app_emprestimos:listar' %}" class="btn btn-outline-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-danger">Excluir</button>
+  </form>
+</div>
+{% endblock %}
