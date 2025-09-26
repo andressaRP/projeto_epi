@@ -240,7 +240,7 @@
     return ok;
   }
 
-  // Fallback simples caso o browser não suporte datetime-local
+  // Fallback caso o browser não suporte datetime-local
   function ensureDTLocalSupport(input){
     if (!input) return;
     if (input.type !== 'datetime-local') {

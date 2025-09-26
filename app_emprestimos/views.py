@@ -62,11 +62,11 @@ def listar(request):
         # badges no topo do relatório
         "por_status": _por_status(),
 
-        # métricas (use se quiser mostrar no template)
+        # métricas 
         "total": total,
         "abertos": abertos,
 
-        # para controlar botões Excluir em finalizados
+        # controlar botões Excluir em finalizados
         "FINALIZADOS": [s.value for s in FINALIZADOS],
     })
 
@@ -102,7 +102,7 @@ def cadastrar(request):
 
         base = data_emprestimo or timezone.now()
 
-        # regra: emprestado → precisa de data prevista futura
+        # para emprestado → precisa de data prevista futura
         if status == Emprestimo.Status.EMPRESTADO:
             if not data_prevista:
                 messages.error(request, "Informe a data prevista de devolução para empréstimos.")
@@ -121,7 +121,7 @@ def cadastrar(request):
                     "epis": epis,
                 })
 
-        # regra: fornecido → ignora data_prevista
+        # para fornecido → ignora data_prevista
         if status == Emprestimo.Status.FORNECIDO:
             data_prevista = None
 
@@ -163,7 +163,7 @@ def editar(request, pk):
     obj = get_object_or_404(Emprestimo, pk=pk)
 
     if request.method == "POST":
-        # 👉 Só lemos o que pode mudar
+        # Só lemos o que pode mudar
         status = request.POST.get("status") or obj.status
         d_dev  = _parse_dt(request.POST.get("data_devolucao"))
 
@@ -190,7 +190,7 @@ def editar(request, pk):
                 "is_final": status in {"devolvido","danificado","perdido"},
             })
 
-        # ✅ aplica SOMENTE status e data_devolucao
+        #  aplica SOMENTE status e data_devolucao
         obj.status = status
         if status in FINAIS:
             obj.data_devolucao = d_dev
@@ -213,15 +213,6 @@ def editar(request, pk):
         "status_choices": [(s.value, s.label) for s in Emprestimo.Status],
         "is_final": obj.status in {"devolvido","danificado","perdido"},
     })
-# --- PAINEL por colaborador (quantos EPIs cada um tem em aberto) ---
-def painel_colaboradores(request):
-    # Em "aberto" considero: emprestado/em_uso/fornecido (não finais)
-    abertos = Emprestimo.objects.filter(status__in=["emprestado","em_uso","fornecido"])
-    resumo = (abertos
-              .values("colaborador__id","colaborador__nome","colaborador__matricula")
-              .annotate(qtd=Count("id"))
-              .order_by("colaborador__nome"))
-    return render(request, "emprestimos/pages/painel_colaboradores.html", {"resumo": resumo})
 
 # --- APAGAR (só se finalizado) ---
 FINALIZADOS = {
@@ -233,7 +224,7 @@ FINALIZADOS = {
 def apagar(request, pk):
     emp = get_object_or_404(Emprestimo, pk=pk)
 
-    # Regra: só apaga se estiver finalizado
+    # só pode apagar se estiver finalizado
     if emp.status not in FINALIZADOS:
         messages.error(request, "Só é possível excluir empréstimos finalizados (ex.: Devolvido).")
         return redirect('app_emprestimos:listar')

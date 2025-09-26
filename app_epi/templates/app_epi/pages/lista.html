@@ -11,6 +11,7 @@
     <tr>
       <th>Nome</th>
       <th>Código interno</th>
+      <th>CA</th>
       <th class="text-end">Ações</th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
       <tr>
         <td>{{ epi.nome }}</td>
         <td>{{ epi.codigo_interno }}</td>
+        <td>{{ epi.ca }}</td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-primary"
              href="{% url 'app_epi:editar_epi' epi.id %}">

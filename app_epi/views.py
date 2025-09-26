@@ -23,6 +23,8 @@ def cadastrar_epi(request):
 
         if not nome:
             messages.error(request, "O campo Nome é obrigatório.")
+        elif Epi.objects.filter(codigo_interno=codigo_interno).exists():
+            messages.error(request, "Já existe um EPI com este código interno.")
         else:
             epi = Epi(
                 nome=nome,
