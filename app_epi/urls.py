@@ -27,5 +27,6 @@ urlpatterns = [
     path('editar_epi/<int:id>/', login_required(views.editar_epi), name='editar_epi'),
     path('update/<int:id>/', login_required(views.update), name='update'),
     path('delete/<int:id>/', login_required(views.delete), name='delete'),
+    path('relatorio_epi/', login_required(views.relatorio_epi), name='relatorio_epi'), 
     
 ]

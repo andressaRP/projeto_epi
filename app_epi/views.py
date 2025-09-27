@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import ProtectedError
+from django.utils import timezone
+from django.db.models import Q, Count, F
+from django.db.models.functions import Coalesce
 from .models import Epi
-
+from app_emprestimos.models import Emprestimo
 # Create your views here.
 def home(request):
     epis = Epi.objects.all()
@@ -87,3 +90,76 @@ def delete(request, id):
 
     # GET → mostra tela de confirmação
     return render(request, "app_epi/pages/confirmar_delete.html", {"epi": epi})
+
+def relatorio_epi(request):
+    hoje = timezone.now().date()
+
+    epis = (
+        Epi.objects
+        .annotate(
+            # total de movimentações (empréstimos) por EPI
+            total=Count('emprestimos', distinct=True),
+
+            # abertos que contam como uso: apenas EMPRESTADO (FORNECIDO não entra como atrasado)
+            emprestados=Count(
+                'emprestimos',
+                filter=Q(emprestimos__status=Emprestimo.Status.EMPRESTADO),
+                distinct=True
+            ),
+
+            # somente EMPRESTADO vencido conta como atrasado
+            atrasados=Count(
+                'emprestimos',
+                filter=Q(emprestimos__status=Emprestimo.Status.EMPRESTADO) &
+                        Q(emprestimos__data_prevista_devolucao__isnull=False) &
+                        Q(emprestimos__data_prevista_devolucao__lt=hoje),
+                distinct=True
+            ),
+
+            # demais status (não entram no atraso)
+            fornecidos=Count(
+                'emprestimos',
+                filter=Q(emprestimos__status=Emprestimo.Status.FORNECIDO),
+                distinct=True
+            ),
+            devolvidos=Count(
+                'emprestimos',
+                filter=Q(emprestimos__status=Emprestimo.Status.DEVOLVIDO),
+                distinct=True
+            ),
+            danificados=Count(
+                'emprestimos',
+                filter=Q(emprestimos__status=Emprestimo.Status.DANIFICADO),
+                distinct=True
+            ),
+            perdidos=Count(
+                'emprestimos',
+                filter=Q(emprestimos__status=Emprestimo.Status.PERDIDO),
+                distinct=True
+            ),
+        )
+        .annotate(
+            # em uso = emprestados + fornecidos
+            em_uso=F('emprestados') + F('fornecidos'),
+            # disponível = quantidade - em uso  
+            disponivel=Coalesce(F('quantidade'), 0)
+                       - (Coalesce(F('emprestados'), 0) + Coalesce(F('fornecidos'), 0)),
+        )
+        .order_by('nome')
+    )
+
+    # Mantém o formato esperado no template
+    dados = [{
+        "epi": e,
+        "total": e.total,
+        "emprestados": e.emprestados,
+        "fornecidos": e.fornecidos,
+        "devolvidos": e.devolvidos,
+        "danificados": e.danificados,
+        "perdidos": e.perdidos,
+        "atrasados": e.atrasados,       #  só EMPRESTADO vencido
+        "em_uso": e.em_uso,
+        "disponivel": max(e.disponivel, 0),  # evita número negativo
+    } for e in epis]
+
+    return render(request, "app_epi/pages/relatorio.html", {"dados": dados})

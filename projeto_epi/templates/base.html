@@ -183,6 +183,9 @@
           <a class="nav-link {% if request.resolver_match.url_name == 'relatorio' %}active{% endif %}"
             href="{% url 'app_emprestimos:relatorio' %}"> Relatório de Empréstimos
           </a>
+          <a class="nav-link {% if request.resolver_match.url_name == 'relatorio_epi' %}active{% endif %}"
+            href="{% url 'app_epi:relatorio_epi' %}">Relatório de EPI
+          </a>
 
           <div class="section-title">Configurações</div>
           <a class="nav-link disabled" href="#">Perfil</a>
