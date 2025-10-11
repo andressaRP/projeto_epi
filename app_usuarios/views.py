@@ -104,7 +104,7 @@ def registrar(request):
         if user:
           login(request, user)
           messages.success(request, "Conta criada! Bem-vinda(o) ")
-          return redirect('login')
+          return redirect('app_menu:menu')
         else:
             messages.error(request, "Verifique os campos destacados.")
     else:

@@ -11,6 +11,7 @@
     <tr>
       <th>Nome</th>
       <th>Matrícula</th>
+      <th>CPF</th>
       <th class="text-end">Ações</th>
     </tr>
   </thead>
@@ -19,6 +20,7 @@
       <tr>
         <td>{{ colaborador.nome }}</td>
         <td>{{ colaborador.matricula }}</td>
+        <td>{{ colaborador.cpf }}</td>
         <td class="text-end">
           <a class="btn btn-sm btn-outline-primary" 
              href="{% url 'app_usuarios:editar_colaborador' colaborador.id %}">
