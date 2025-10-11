@@ -18,13 +18,6 @@ def test_resolucao_da_rota_index_aponta_para_views_index():
     assert real_func == views.index
 
 
-def campos_obrigatorios_ok(nome, cpf, matricula):
-    return all([nome.strip(), cpf.strip(), matricula.strip()])
-
-def test_campos_obrigatorios_ok():
-    assert not campos_obrigatorios_ok("", "1", "2")
-    assert campos_obrigatorios_ok("Ana", "111", "A1")
-
 def rota_deletar_colaborador(colab_id: int) -> str:
     """Monta a URL da tela de confirmação de delete para um colaborador."""
     return reverse("app_usuarios:delete", kwargs={"id": colab_id})

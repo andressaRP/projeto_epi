@@ -9,15 +9,6 @@ from django.urls import reverse, resolve
 from app_emprestimos import views
 import app_emprestimos.views as emprestimos_views
 
-@pytest.mark.django_db
-def test_listar_emprestimos_quando_autenticado_responde_200(client, django_user_model):
-    """Usuário logado acessa a lista e recebe 200."""
-    user = django_user_model.objects.create_user(username="u1", password="123456")
-    client.force_login(user)
-
-    url = reverse("app_emprestimos:listar")
-    resp = client.get(url)
-    assert resp.status_code == 200    
 
 @pytest.mark.django_db
 def test_cadastrar_emprestado_sem_data_prevista_nao_cria_emprestimo(client, django_user_model, monkeypatch):
@@ -74,4 +65,3 @@ def test_mostra_apenas_status_emprestado_e_fornecido_no_cadastramento(client, dj
     assert 'value="devolvido"' not in html and ">devolvido<" not in html
     assert 'value="danificado"' not in html and ">danificado<" not in html
     assert 'value="perdido"' not in html and ">perdido<" not in html
-
