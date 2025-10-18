@@ -6,12 +6,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
-@pytest.fixture(scope="function")  # abre/fecha a cada teste — mais fácil de ver
+@pytest.fixture(scope="function")  # abre/fecha a cada teste
 def browser():
     opts = Options()
-    # ⚠️ SEM HEADLESS:
-    # NÃO adicione "--headless" aqui.
-    opts.add_experimental_option("detach", True)  # mantém a janela aberta após o quit
+  
+    opts.add_experimental_option("detach", True) 
     opts.add_argument("--start-maximized")
     opts.add_argument("--disable-gpu")
     opts.add_argument("--no-sandbox")

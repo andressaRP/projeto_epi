@@ -29,7 +29,7 @@ try:
         WebDriverWait(driver, 8).until(EC.title_contains("Sistema EPI"))
         titulo = driver.title
         if "Entrar" not in titulo:
-            print("✅ Login OK! Título:", titulo)
+            print("Login OK! Título:", titulo)
         else:
             raise TimeoutError("Ainda na tela de login.")
     except Exception:
@@ -38,9 +38,9 @@ try:
             erro = WebDriverWait(driver, 3).until(
                 EC.visibility_of_element_located((By.CSS_SELECTOR, ".alert.alert-danger"))
             )
-            print("❌ Login falhou. Mensagem exibida:", erro.text)
+            print("Login falhou. Mensagem exibida:", erro.text)
         except Exception:
-            print("❌ Login falhou, e não achei alerta. Título atual:", driver.title)
+            print("Login falhou, e não achei alerta. Título atual:", driver.title)
 
 finally:
     time.sleep(2)  

@@ -79,3 +79,5 @@ def test_emprestar_epi_prevista_bem_futura(live_server, browser, wait, django_us
     assert (colab.nome in body) or (epi.nome in body) or ("sucesso" in body.lower()), \
         "Não encontrei confirmação visível na UI (ajuste texto/rota pós-submit se necessário)."
     pause()
+
+    

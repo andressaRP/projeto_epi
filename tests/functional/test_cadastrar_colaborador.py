@@ -35,7 +35,7 @@ def test_cadastrar_colaborador_com_login(live_server, browser, wait, django_user
     # --- abre o formulário protegido ---
     browser.get(live_server.url + FORM_URL)
 
-    # captura inputs do seu template
+    # captura inputs do template
     nome_el = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input#nome[name='nome']")))
     cpf_el  = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input#cpf[name='cpf']")))
     mat_el  = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "input#matricula[name='matricula']")))
